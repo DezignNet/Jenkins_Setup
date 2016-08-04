@@ -2,6 +2,8 @@
 
 # This script will install Jenkins on this computer
 # This file can be run on CentOS, Debian or Ubuntu machines without issues
+# If issues are found, please submit update and push changes if you
+#   are comfortable with using Git and BASH scripting
 
 # Get and install the Jenkins signing key
 wget -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
