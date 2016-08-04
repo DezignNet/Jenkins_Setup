@@ -6,4 +6,4 @@ The single script will run on CentOS, Debian or Ubuntu.
 
 To easily run this script, issue the following from a terminal window:
 
-wget -q0- https://github.com/DezignNet/Jenkins_Setup/raw/instjenkins.bash | bash
+wget -qO- https://github.com/DezignNet/Jenkins_Setup/raw/instjenkins.bash | bash
