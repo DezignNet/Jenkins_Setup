@@ -51,7 +51,7 @@ case "$thisDist" in
             yum update -y && yum install jenkins -y
 
             # Allow public access to Jenkins if the firewall is enabled
-            if [ "$(firewall-cmd --status)" = "running" ]; then
+            if [ "$(firewall-cmd --state)" = "running" ]; then
                firewall-cmd --zone=public --add-port=8080/tcp --permanent
                firewall-cmd --zone=public --add-port=http --permanent
                firewall-cmd --reload
