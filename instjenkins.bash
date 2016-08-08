@@ -16,18 +16,17 @@ if [ -e /usr/bin/lsb_release ]; then
    thisDist="$(lsb_release -i | awk '{ print $3 }')"
    thisRel="$(lsb_release -r | awk '{ print $2 }' | cut -d '.' -f1)"
 else
-   thisDist="$(grep "^NAME=" $ETC/os-release | cut -d "=" -f2 | tr -d "\"" | awk '{ print $1 }')"
-   thisRel="$(grep "^VERSION=" $ETC/os-release | cut -d "=" -f2 | tr -d "\"" | cut -d " " -f1 | cut -d "." -f1)"
+   thisDist="$(grep "^NAME=" /etc/os-release | cut -d "=" -f2 | tr -d "\"" | awk '{ print $1 }')"
+   thisRel="$(grep "^VERSION=" /etc/os-release | cut -d "=" -f2 | tr -d "\"" | cut -d " " -f1 | cut -d "." -f1)"
 fi
 
+# Check for Java
+JAVAINST="$(java -version)"
 
 case "$thisDist" in
    "Debian"|"Ubuntu")
       # Get and install the Jenkins signing key
       wget -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
-
-      # Check for Java and if exist, remove and install OpenJDK
-      JAVAINST="$(java -version)"
 
       if [ "$JAVAINST" = "" ]; then
          apt-get install openjdk-7-jre -y
@@ -38,6 +37,19 @@ case "$thisDist" in
          echo "deb http://pkg.jenkins-ci.org/debian-stable binary/" > /etc/apt/sources.list.d/jenkins.list
          apt-get update && apt-get install jenkins -y
       fi
+   ;;
+
+   "CentOS*"|"RedHat*")
+      if [ $(id -u) = 0 ]; then
+         if [ "$JAVAINST" = "" ]; then
+            yum install java -y
+         fi
+
+         if [ ! -e /etc/yum.repos.d/jenkins.repo ]; then
+            wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
+            rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+            yum update -y && yum install jenkins -y
+         fi
    ;;
 
    *)
