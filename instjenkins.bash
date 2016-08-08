@@ -7,14 +7,8 @@
 
 # Constant variables
 CURDIR="$(pwd)"
-RMRF="rm -Rf"
-RMF="rm -f"
 LOGFILE="/var/log/log_Jenkins_`date '+%F_%H-%M-%S'`.log"
-numProcs="$(( $(cat /proc/cpuinfo | grep processor | wc -l) + 1 ))"
 ETC="/etc"
-ETCINIT="$ETC/init"
-ETCINITd="$ETC/init.d"
-USRLOCALBIN="/usr/local/bin"
 thisArch="$(uname -m)"
 myRunLVL=$(runlevel | awk '{ print $2 }')
 
