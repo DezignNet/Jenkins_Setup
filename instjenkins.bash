@@ -39,7 +39,7 @@ case "$thisDist" in
       fi
    ;;
 
-   "CentOS*"|"RedHat*")
+   "Cent*"|"RedHa*")
       if [ $(id -u) = 0 ]; then
          if [ "$JAVAINST" = "" ]; then
             yum install java -y
