@@ -24,7 +24,7 @@ fi
 JAVAINST="$(java -version)"
 
 case "$thisDist" in
-   "Debian"|"Ubuntu")
+   Debian|Ubuntu)
       # Get and install the Jenkins signing key
       wget -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 
@@ -39,7 +39,7 @@ case "$thisDist" in
       fi
    ;;
 
-   "Cent*"|"RedHa*")
+   CentOS*|RedHat*)
       if [ $(id -u) = 0 ]; then
          if [ "$JAVAINST" = "" ]; then
             yum install java -y
@@ -49,6 +49,13 @@ case "$thisDist" in
             wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
             rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
             yum update -y && yum install jenkins -y
+
+            # Allow public access to Jenkins if the firewall is enabled
+            if [ "$(firewall-cmd --status)" = "running" ]; then
+               firewall-cmd --zone=public --add-port=8080/tcp --permanent
+               firewall-cmd --zone=public --add-port=http --permanent
+               firewall-cmd --reload
+            fi
          fi
       fi
    ;;
