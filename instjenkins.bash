@@ -50,6 +50,7 @@ case "$thisDist" in
             rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
             yum update -y && yum install jenkins -y
          fi
+      fi
    ;;
 
    *)
