@@ -49,6 +49,8 @@ case "$thisDist" in
             wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
             rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
             yum update -y && yum install jenkins -y
+            service jenkins start
+            chkconfig jenkins on
 
             # Allow public access to Jenkins if the firewall is enabled
             if [ "$(firewall-cmd --state)" = "running" ]; then
