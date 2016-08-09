@@ -37,6 +37,10 @@ case "$thisDist" in
          echo "deb http://pkg.jenkins-ci.org/debian-stable binary/" > /etc/apt/sources.list.d/jenkins.list
          apt-get update && apt-get install jenkins -y
       fi
+
+      if [ "$thisDist" = "Ubuntu" ]; then
+         /etc/init.d/jenkins start
+      fi
    ;;
 
    CentOS*|RedHat*)
