@@ -6,7 +6,7 @@
 #   are comfortable with using Git and BASH scripting
 
 # Check to see if we are running as the root user
-if [ $myID <> 0 ]; then
+if [ $(id -u) <> 0 ]; then
    echo "...you must be root to run this script..."
    exit
 fi
