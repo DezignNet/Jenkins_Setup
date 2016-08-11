@@ -5,6 +5,12 @@
 # If issues are found, please submit update and push changes if you
 #   are comfortable with using Git and BASH scripting
 
+# Check to see if we are running as the root user
+if [ $myID <> 0 ]; then
+   echo "...you must be root to run this script..."
+   exit
+fi
+
 # Constant variables
 CURDIR="$(pwd)"
 LOGFILE="/var/log/log_Jenkins_`date '+%F_%H-%M-%S'`.log"
