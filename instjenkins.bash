@@ -35,7 +35,11 @@ case "$thisDist" in
       wget -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 
       if [ "$JAVAINST" = "" ]; then
-         apt-get install openjdk-7-jre -y
+         if [ "$thisDist" = "Debian" ]; then
+            apt-get install openjdk-7-jre-headless -y
+         else
+            apt-get install openjdk-8-jre-headless -y
+         fi
       fi
 
       # Setup Jenkins repo and install
