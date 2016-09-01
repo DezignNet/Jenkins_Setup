@@ -69,7 +69,8 @@ case "$thisDist" in
             # Allow public access to Jenkins if the firewall is enabled
             if [ "$(firewall-cmd --state)" = "running" ]; then
                firewall-cmd --zone=public --add-port=8080/tcp --permanent
-               firewall-cmd --zone=public --add-service=http --permanent
+               # Uncomment the next line if you want to allow HTTP to your web server
+               #firewall-cmd --zone=public --add-service=http --permanent
                firewall-cmd --reload
             fi
          fi
